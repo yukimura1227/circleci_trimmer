@@ -1,5 +1,7 @@
-require "circleci_trimmer/version"
+require 'circleci_trimmer/version'
+require 'circleci_trimmer/command'
 
+# namespace
 module CircleciTrimmer
-  # Your code goes here...
+  CircleciTrimmer::Command.start(ARGV)
 end
