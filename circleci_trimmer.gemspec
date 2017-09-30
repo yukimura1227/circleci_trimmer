@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["yukimura1227"]
   spec.email         = ["takamura1227@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{this is circleci api wrapper}
+  spec.description   = %q{this gem give you some commands for circleci api}
+  spec.homepage      = 'https://github.com/yukimura1227/circleci_trimmer'
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
