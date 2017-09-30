@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/yukimura1227/circleci_trimmer.svg?branch=master)](https://travis-ci.org/yukimura1227/circleci_trimmer)
+
 # CircleciTrimmer
 
 This is a Command Line Tool for extracting buid information by CircleCi API.
