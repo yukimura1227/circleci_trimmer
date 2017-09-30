@@ -13,7 +13,9 @@ RSpec.describe CircleciTrimmer::Command do
   describe 'show token' do
     context 'no token file' do
       before do
-        File.delete(CircleciTrimmer::Command.token_path)
+        if File.exist?(CircleciTrimmer::Command.token_path)
+          File.delete(CircleciTrimmer::Command.token_path)
+        end
       end
       it 'show warning message cause yet token registered' do
         output = capture(:stdout) { described_class.start(%w(show_token)) }
@@ -36,7 +38,9 @@ RSpec.describe CircleciTrimmer::Command do
   end
   describe 'token [api_token_value]' do
     before do
-      File.delete(CircleciTrimmer::Command.token_path)
+      if File.exist?(CircleciTrimmer::Command.token_path)
+        File.delete(CircleciTrimmer::Command.token_path)
+      end
     end
     it 'store api_token_value' do
       described_class.start(%w(token dummy_token_value))
