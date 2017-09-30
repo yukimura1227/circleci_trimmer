@@ -2,6 +2,7 @@ require 'bundler/setup'
 require 'circleci_trimmer'
 
 RSpec.configure do |config|
+  ENV['TEST_FLAG'] = 'true'
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
 
