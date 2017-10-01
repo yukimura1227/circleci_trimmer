@@ -1,10 +1,9 @@
 require 'bundler/setup'
-require 'circleci_trimmer'
-
 require 'simplecov'
-
 # FIXME: not rails project (but if no argument then lib dir is not covered!!)
 SimpleCov.start 'rails'
+
+require 'circleci_trimmer'
 
 if ENV['TRAVIS'] == 'true'
   require 'codecov'
