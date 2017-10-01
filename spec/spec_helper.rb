@@ -1,6 +1,15 @@
 require 'bundler/setup'
 require 'circleci_trimmer'
 
+require 'simplecov'
+
+SimpleCov.start
+
+if ENV['TRAVIS'] == 'true'
+  require 'codecov'
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov
+end
+
 RSpec.configure do |config|
   ENV['TEST_FLAG'] = 'true'
   # Enable flags like --only-failures and --next-failure

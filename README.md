@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/yukimura1227/circleci_trimmer.svg?branch=master)](https://travis-ci.org/yukimura1227/circleci_trimmer)
+[![codecov](https://codecov.io/gh/yukimura1227/circleci_trimmer/branch/master/graph/badge.svg)](https://codecov.io/gh/yukimura1227/circleci_trimmer)
 
 # CircleciTrimmer
 
