@@ -38,4 +38,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'thor'
   spec.add_dependency 'httpclient'
+  spec.add_dependency 'hashie'
 end

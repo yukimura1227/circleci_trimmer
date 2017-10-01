@@ -20,10 +20,22 @@ module CircleciTrimmer
       Setting.token = token
     end
 
-    desc 'show_projects', 'show projects'
-    def show_projects
-      client = CircleciTrimmer::HttpClient.new
+    desc 'call_projects', 'call projects'
+    def call_projects
       puts client.call_projects
+    end
+
+    desc 'list_user_names', 'call projects and extract usernames'
+    def list_user_names
+      client.list_user_names.each do |username|
+        puts username
+      end
+    end
+
+    private
+
+    def client
+      @client ||= CircleciTrimmer::HttpClient.new
     end
   end
 end
