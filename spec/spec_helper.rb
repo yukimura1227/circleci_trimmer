@@ -3,7 +3,8 @@ require 'circleci_trimmer'
 
 require 'simplecov'
 
-SimpleCov.start
+# FIXME: not rails project (but if no argument then lib dir is not covered!!)
+SimpleCov.start 'rails'
 
 if ENV['TRAVIS'] == 'true'
   require 'codecov'
