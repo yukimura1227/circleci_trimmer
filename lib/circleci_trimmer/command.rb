@@ -22,8 +22,13 @@ module CircleciTrimmer
 
     desc 'call_projects', 'call projects'
     def call_projects
-      client = CircleciTrimmer::HttpClient.new
       puts client.call_projects
+    end
+
+    private
+
+    def client
+      @client ||= CircleciTrimmer::HttpClient.new
     end
   end
 end
