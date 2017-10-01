@@ -1,7 +1,8 @@
 require 'bundler/setup'
 require 'simplecov'
-# FIXME: not rails project (but if no argument then lib dir is not covered!!)
-SimpleCov.start 'rails'
+SimpleCov.start do
+  add_group 'lib', 'lib'
+end
 
 require 'circleci_trimmer'
 
