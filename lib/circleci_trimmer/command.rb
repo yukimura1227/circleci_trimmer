@@ -1,5 +1,6 @@
 require 'thor'
 require 'circleci_trimmer/setting'
+require 'circleci_trimmer/http_client'
 
 module CircleciTrimmer
   # define commands
@@ -17,6 +18,12 @@ module CircleciTrimmer
     desc 'token', 'store circle ci api token'
     def token(token)
       Setting.token = token
+    end
+
+    desc 'show_projects', 'show projects'
+    def show_projects
+      client = CircleciTrimmer::HttpClient.new
+      puts client.call_projects
     end
   end
 end
