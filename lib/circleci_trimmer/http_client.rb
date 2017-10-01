@@ -17,5 +17,11 @@ module CircleciTrimmer
       response = client.get(API_URI_PROJECTS, params)
       @projects_cache = response.body
     end
+
+    def list_user_names
+      call_projects unless @projects_cache
+      projects_api_result = JSON.parse(@projects_cache)
+      projects_api_result.map { |v| v['username'] }
+    end
   end
 end

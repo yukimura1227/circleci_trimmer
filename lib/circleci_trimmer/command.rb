@@ -25,6 +25,13 @@ module CircleciTrimmer
       puts client.call_projects
     end
 
+    desc 'list_user_names', 'call projects and extract usernames'
+    def list_user_names
+      client.list_user_names.each do |username|
+        puts username
+      end
+    end
+
     private
 
     def client
