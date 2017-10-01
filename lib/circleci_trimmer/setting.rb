@@ -11,7 +11,7 @@ module CircleciTrimmer
 
     def self.token
       if File.exist?(token_path)
-        File.open(token_path, 'r', &:read)
+        File.open(token_path, 'r', &:read).chomp
       else
         fail 'there is no registered token. please register token'
       end
