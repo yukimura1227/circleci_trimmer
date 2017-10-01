@@ -4,7 +4,6 @@ require 'circleci_trimmer/setting'
 module CircleciTrimmer
   # define commands
   class Command < Thor
-    include CircleciTrimmer::Setting
     desc 'example', 'an example task'
     def example
       puts "I'm a thor task!"
