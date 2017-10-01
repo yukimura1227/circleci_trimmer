@@ -12,7 +12,7 @@ module CircleciTrimmer
 
     desc 'show_token', 'show registered token'
     def show_token
-      Setting.token
+      puts Setting.token
     end
 
     desc 'token', 'store circle ci api token'
