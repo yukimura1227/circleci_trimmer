@@ -49,6 +49,18 @@ RSpec.describe CircleciTrimmer::Command do
       expect(stored_token.chomp).to eq 'dummy_token_value'
     end
   end
+  describe 'call_projects' do
+    # TODO: using stub (now executing real api)
+    before do
+      File.open(CircleciTrimmer::Setting::TOKEN_PATH_FOR_TEST, 'w') do |f|
+        f.write(ENV['CIRCLECI_API_TOKEN'])
+      end
+    end
+    it 'show user names' do
+      output = capture(:stdout) { described_class.start(%w(call_projects)) }
+      expect(output.chomp).to match(/yukimura1227/)
+    end
+  end
   describe 'list_user_names' do
     # TODO: using stub (now executing real api)
     before do
