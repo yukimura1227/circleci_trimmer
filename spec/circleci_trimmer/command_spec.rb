@@ -18,9 +18,9 @@ RSpec.describe CircleciTrimmer::Command do
         end
       end
       it 'show warning message cause yet token registered' do
-        output = capture(:stdout) { described_class.start(%w(show_token)) }
-        expect(output.chomp).to eq \
-          'there is no registered token. please register token'
+        expect { described_class.start(%w(show_token)) }.to raise_error(
+          /there is no registered token. please register token/
+        )
       end
     end
     context 'exists token file' do
