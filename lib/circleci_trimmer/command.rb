@@ -20,8 +20,8 @@ module CircleciTrimmer
       Setting.token = token
     end
 
-    desc 'show_projects', 'show projects'
-    def show_projects
+    desc 'call_projects', 'call projects'
+    def call_projects
       client = CircleciTrimmer::HttpClient.new
       puts client.call_projects
     end
