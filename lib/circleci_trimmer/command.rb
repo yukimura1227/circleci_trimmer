@@ -4,11 +4,8 @@ module CircleciTrimmer
   # define commands
   class Command < Thor
     def self.token_path
-      if ENV['TEST_FLAG']
-        File.expand_path('~/.circleci_token_test').freeze
-      else
-        File.expand_path('~/.circleci_token').freeze
-      end
+      path_base = ENV['TEST_FLAG'] ? '~/.circleci_token_test' : '~/.circleci_token'
+      File.expand_path(path_base).freeze
     end
 
     desc 'example', 'an example task'
