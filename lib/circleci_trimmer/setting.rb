@@ -8,5 +8,17 @@ module CircleciTrimmer
     def self.token_path
       ENV['TEST_FLAG'] ? TOKEN_PATH_FOR_TEST : TOKEN_PATH
     end
+
+    def self.token
+      if File.exist?(token_path)
+        File.open(token_path, 'r') { |f| puts f.read }
+      else
+        puts 'there is no registered token. please register token'
+      end
+    end
+
+    def self.token=(token)
+      File.open(token_path, 'w') { |f| f.puts(token) }
+    end
   end
 end
