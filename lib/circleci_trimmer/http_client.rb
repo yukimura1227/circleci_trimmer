@@ -12,7 +12,7 @@ module CircleciTrimmer
       }
       client = HTTPClient.new
       response = client.get(uri, params)
-      JSON.parse(response.body)
+      response.body
     end
   end
 end
