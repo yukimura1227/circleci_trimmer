@@ -2,6 +2,7 @@
 
 require 'httpclient'
 require 'json'
+require 'hashie'
 require 'circleci_trimmer/setting'
 
 module CircleciTrimmer
@@ -21,7 +22,8 @@ module CircleciTrimmer
     def list_user_names
       call_projects unless @projects_cache
       projects_api_result = JSON.parse(@projects_cache)
-      projects_api_result.map { |v| v['username'] }
+      repo_infos = projects_api_result.map { |v| Hashie::Mash.new(v) }
+      repo_infos.map(&:username)
     end
   end
 end
