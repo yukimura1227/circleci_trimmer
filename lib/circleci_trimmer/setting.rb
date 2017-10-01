@@ -13,7 +13,7 @@ module CircleciTrimmer
       if File.exist?(token_path)
         File.open(token_path, 'r', &:read)
       else
-        puts 'there is no registered token. please register token'
+        fail 'there is no registered token. please register token'
       end
     end
 
