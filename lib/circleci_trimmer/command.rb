@@ -1,16 +1,10 @@
 require 'thor'
+require 'circleci_trimmer/setting'
+require 'circleci_trimmer/http_client'
 
 module CircleciTrimmer
   # define commands
   class Command < Thor
-    def self.token_path
-      if ENV['TEST_FLAG']
-        File.expand_path('~/.circleci_token_test').freeze
-      else
-        File.expand_path('~/.circleci_token').freeze
-      end
-    end
-
     desc 'example', 'an example task'
     def example
       puts "I'm a thor task!"
@@ -18,16 +12,18 @@ module CircleciTrimmer
 
     desc 'show_token', 'show registered token'
     def show_token
-      if File.exist?(self.class.token_path)
-        File.open(self.class.token_path, 'r') { |f| puts f.read }
-      else
-        puts 'there is no registered token. please register token'
-      end
+      puts Setting.token
     end
 
     desc 'token', 'store circle ci api token'
     def token(token)
-      File.open(self.class.token_path, 'w') { |f| f.puts(token) }
+      Setting.token = token
+    end
+
+    desc 'show_projects', 'show projects'
+    def show_projects
+      client = CircleciTrimmer::HttpClient.new
+      puts client.call_projects
     end
   end
 end
