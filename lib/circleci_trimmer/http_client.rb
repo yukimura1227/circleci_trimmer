@@ -8,7 +8,10 @@ require 'circleci_trimmer/setting'
 module CircleciTrimmer
   # define api executer
   class HttpClient
-    API_URI_PROJECTS = 'https://circleci.com/api/v1.1/projects'.freeze
+    PROTOCOL = 'https:'.freeze
+    DOMAIN   = 'circleci.com'.freeze
+    COMMON_ENDPOINT = "#{PROTOCOL}//#{DOMAIN}/api/v1.1".freeze
+    API_URI_PROJECTS = "#{COMMON_ENDPOINT}/projects".freeze
     def call_projects
       return @projects_cache if @projects_cache
       params = {
