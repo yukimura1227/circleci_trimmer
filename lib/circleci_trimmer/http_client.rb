@@ -21,7 +21,6 @@ module CircleciTrimmer
       params = {
         'circle-token' => CircleciTrimmer::Setting.token
       }
-      client = HTTPClient.new
       response = client.get(API_URI_PROJECTS, params)
       @projects_cache = response.body
     end
@@ -31,7 +30,6 @@ module CircleciTrimmer
       start_at_from = '1900-01-01', start_at_to = '9999-12-31'
     )
       # TODO: using cache for client is better?
-      client = HTTPClient.new
       uri = project_uri(username, repo_name, branch)
       response = client.get(uri)
       result_json = JSON.parse(response.body)
@@ -50,6 +48,10 @@ module CircleciTrimmer
     end
 
     private
+
+    def client
+      @client_cache ||= HTTPClient.new
+    end
 
     def filter_by_status(build_infos)
       build_infos.select do |v|
