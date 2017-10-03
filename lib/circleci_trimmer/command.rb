@@ -28,13 +28,25 @@ module CircleciTrimmer
     option :username,  required: true, aliases: :u
     option :repo_name, required: true, aliases: :r
     option :branch,    required: true, aliases: :b
+    option :start_at_from
+    option :start_at_to
     desc 'call_user_repo_branch', 'call project api'
     def call_user_repo_branch
-      client.call_user_repo_branch(
-        options[:username],
-        options[:repo_name],
-        options[:branch]
-      )
+      if [options[:start_at_from], options[:start_at_to]].any?
+        puts client.filtered_user_repo_branch(
+          options[:username],
+          options[:repo_name],
+          options[:branch],
+          options[:start_at_from],
+          options[:start_at_to]
+        )
+      else
+        puts client.call_user_repo_branch(
+          options[:username],
+          options[:repo_name],
+          options[:branch]
+        )
+      end
     end
 
     desc 'list_user_names', 'call projects and extract usernames'

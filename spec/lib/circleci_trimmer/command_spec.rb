@@ -73,4 +73,37 @@ RSpec.describe CircleciTrimmer::Command do
       expect(output.chomp).to match(/yukimura1227/)
     end
   end
+  describe 'call_user_repo_branch' do
+    # TODO: using stub (now executing real api)
+    before do
+      File.open(CircleciTrimmer::Setting::TOKEN_PATH_FOR_TEST, 'w') do |f|
+        f.write(ENV['CIRCLECI_API_TOKEN'])
+      end
+    end
+    context 'no optional args' do
+      it 'call_user_repo_branch' do
+        output = capture(:stdout) do
+          described_class.start(
+            %w(
+              call_user_repo_branch -u=yukimura1227 -r=codecov_sample -b=master
+            )
+          )
+        end
+        expect(output.chomp).to match(/yukimura1227/)
+      end
+    end
+    context 'with optional args(start_at_from and start_at_to' do
+      # TODO: it should check for filtering but 9999-12-31 is meaningless
+      it 'call_user_repo_branch' do
+        output = capture(:stdout) do
+          described_class.start(
+            ['call_user_repo_branch',
+             '-u=yukimura1227', '-r=codecov_sample', '-b=master',
+             "--start_at_from='9999-12-31'", "--start_at_to='9999-12-31'"]
+          )
+        end
+        expect(output.chomp).to eq ''
+      end
+    end
+  end
 end
