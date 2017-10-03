@@ -25,14 +25,18 @@ module CircleciTrimmer
       @projects_cache = response.body
     end
 
-    def call_user_repo_branch(
-      username, repo_name, branch,
-      start_at_from = '1900-01-01', start_at_to = '9999-12-31'
-    )
+    def call_user_repo_branch(username, repo_name, branch)
       uri = project_uri(username, repo_name, branch)
       response = client.get(uri)
       result_json = JSON.parse(response.body)
-      build_infos = result_json.map { |v| Hashie::Mash.new(v) }
+      result_json.map { |v| Hashie::Mash.new(v) }
+    end
+
+    def filtered_user_repo_branch(
+      username, repo_name, branch,
+      start_at_from = '1900-01-01', start_at_to = '9999-12-31'
+    )
+      build_infos = call_user_repo_branch(username, repo_name, branch)
       done_build_infos = filter_by_status(build_infos)
       selected_build_infos =
         filter_by_start_time(done_build_infos, start_at_from, start_at_to)
