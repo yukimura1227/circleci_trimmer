@@ -29,7 +29,6 @@ module CircleciTrimmer
       username, repo_name, branch,
       start_at_from = '1900-01-01', start_at_to = '9999-12-31'
     )
-      # TODO: using cache for client is better?
       uri = project_uri(username, repo_name, branch)
       response = client.get(uri)
       result_json = JSON.parse(response.body)
