@@ -12,8 +12,9 @@ module CircleciTrimmer
     DOMAIN   = 'circleci.com'.freeze
     COMMON_ENDPOINT = "#{PROTOCOL}//#{DOMAIN}/api/v1.1".freeze
     API_URI_PROJECTS = "#{COMMON_ENDPOINT}/projects".freeze
-    # TODO: 名前付きテンプレート　文字列にしたい
-    API_URI_PROJECT  = "#{COMMON_ENDPOINT}/project/github/%s/%s/tree/%s?circle-token=%s".freeze
+    # TODO: want to using template with named variables
+    API_URI_PROJECT =
+      "#{COMMON_ENDPOINT}/project/github/%s/%s/tree/%s?circle-token=%s".freeze
 
     def call_projects
       return @projects_cache if @projects_cache
