@@ -5,6 +5,7 @@ SimpleCov.start do
   add_group 'lib', 'lib'
 end
 
+require 'pry'
 require 'circleci_trimmer'
 
 if ENV['TRAVIS'] == 'true'
