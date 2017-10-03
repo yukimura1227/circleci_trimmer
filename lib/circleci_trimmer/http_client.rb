@@ -36,7 +36,7 @@ module CircleciTrimmer
       done_build_infos = filter_by_status(build_infos)
       selected_build_infos =
         filter_by_start_time(done_build_infos, start_at_from, start_at_to)
-      puts selected_build_infos.map { |v| "#{v.start_time}, #{v.status}" }
+      selected_build_infos.map { |v| "#{v.start_time}, #{v.status}" }
     end
 
     def list_user_names
