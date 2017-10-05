@@ -26,10 +26,16 @@ module CircleciTrimmer
     end
 
     def call_user_repo_branch(username, repo_name, branch)
+      user_repo_branch_cache = detect_user_repo_branch_cache(username, repo_name, branch)
+      return user_repo_branch_cache if user_repo_branch_cache
       uri = project_uri(username, repo_name, branch)
       response = client.get(uri)
       result_json = JSON.parse(response.body)
-      result_json.map { |v| Hashie::Mash.new(v) }
+      result = result_json.map { |v| Hashie::Mash.new(v) }
+      register_user_repo_branch_cache(
+        username, repo_name, branch, result
+      )
+      result
     end
 
     def filtered_user_repo_branch(
@@ -51,6 +57,23 @@ module CircleciTrimmer
     end
 
     private
+
+    def register_user_repo_branch_cache(
+      username, repo_name, branch, target_data
+    )
+      @user_repo_branch_caches ||= {}
+      cache_key = calc_cache_key(username, repo_name, branch)
+      @user_repo_branch_caches[cache_key] = target_data
+    end
+
+    def detect_user_repo_branch_cache(username, repo_name, branch)
+      @user_repo_branch_caches ||= {}
+      @user_repo_branch_caches[calc_cache_key(username, repo_name, branch)]
+    end
+
+    def calc_cache_key(username, repo_name, branch)
+      "u__#{username}__r__#{repo_name}__b__#{branch}"
+    end
 
     def client
       @client_cache ||= HTTPClient.new
