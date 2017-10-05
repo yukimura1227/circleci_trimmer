@@ -25,24 +25,24 @@ module CircleciTrimmer
       @projects_cache = response.body
     end
 
-    def call_user_repo_branch(username, repo_name, branch)
-      user_repo_branch_cache = detect_user_repo_branch_cache(username, repo_name, branch)
+    def call_user_repo_branch(user, repo, branch)
+      user_repo_branch_cache = detect_user_repo_branch_cache(user, repo, branch)
       return user_repo_branch_cache if user_repo_branch_cache
-      uri = project_uri(username, repo_name, branch)
+      uri = project_uri(user, repo, branch)
       response = client.get(uri)
       result_json = JSON.parse(response.body)
       result = result_json.map { |v| Hashie::Mash.new(v) }
       register_user_repo_branch_cache(
-        username, repo_name, branch, result
+        user, repo, branch, result
       )
       result
     end
 
     def filtered_user_repo_branch(
-      username, repo_name, branch,
+      user, repo, branch,
       start_at_from = '1900-01-01', start_at_to = '9999-12-31'
     )
-      build_infos = call_user_repo_branch(username, repo_name, branch)
+      build_infos = call_user_repo_branch(user, repo, branch)
       done_build_infos = filter_by_status(build_infos)
       selected_build_infos =
         filter_by_start_time(done_build_infos, start_at_from, start_at_to)
@@ -59,20 +59,20 @@ module CircleciTrimmer
     private
 
     def register_user_repo_branch_cache(
-      username, repo_name, branch, target_data
+      user, repo, branch, target_data
     )
       @user_repo_branch_caches ||= {}
-      cache_key = calc_cache_key(username, repo_name, branch)
+      cache_key = calc_cache_key(user, repo, branch)
       @user_repo_branch_caches[cache_key] = target_data
     end
 
-    def detect_user_repo_branch_cache(username, repo_name, branch)
+    def detect_user_repo_branch_cache(user, repo, branch)
       @user_repo_branch_caches ||= {}
-      @user_repo_branch_caches[calc_cache_key(username, repo_name, branch)]
+      @user_repo_branch_caches[calc_cache_key(user, repo, branch)]
     end
 
-    def calc_cache_key(username, repo_name, branch)
-      "u__#{username}__r__#{repo_name}__b__#{branch}"
+    def calc_cache_key(user, repo, branch)
+      "u__#{user}__r__#{repo}__b__#{branch}"
     end
 
     def client
@@ -91,11 +91,11 @@ module CircleciTrimmer
       end
     end
 
-    def project_uri(username, repo_name, branch)
+    def project_uri(user, repo, branch)
       format(
         API_URI_PROJECT,
-        username,
-        repo_name,
+        user,
+        repo,
         branch,
         CircleciTrimmer::Setting.token
       )
